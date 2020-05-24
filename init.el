@@ -49,7 +49,10 @@
 (use-package hydra)
 
 (use-package magit
-  :ensure-system-package git)
+  :ensure-system-package git
+  :config
+    (async-shell-command "git config --global user.email git-david@bluekeys.eu")
+    (async-shell-command "git config --global user.name David"))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
