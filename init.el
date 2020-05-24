@@ -51,6 +51,7 @@
 (use-package magit
   :ensure-system-package git
   :config
+    (async-shell-command "git config --global transfer.fsckObjects true") ;; https://lists.gnu.org/archive/html/emacs-devel/2016-01/msg01802.html
     (async-shell-command "git config --global user.email git-david@bluekeys.eu")
     (async-shell-command "git config --global user.name David"))
 
