@@ -41,10 +41,28 @@
 
 (use-package swiper)
 
+;; Counsel
+;; https://oremacs.com/2015/04/09/counsel-completion/
+
+;; Counsel lives in the same repository as swiper and uses ivy to
+;; - Complete Elisp at point with counsel-el.
+;; - Complete Clojure at point with counsel-clj.
+;; - Open a git-managed file with counsel-git.
+;; - Describe an Elisp variable with counsel-describe-variable.
+;; - Describe an Elisp function with counsel-describe-function.
+;; - Look up an Elisp symbol in the info with counsel-info-lookup-symbol.
+;; - Insert a Unicode character at point with counsel-unicode-char.
+(use-package counsel
+  :bind (("C-h f" . counsel-describe-function)
+	 ("C-h u" . counsel-unicode-char)
+	 ("C-h v" . counsel-describe-variable)
+	 ("C-h s" . counsel-info-lookup-symbol)))
+
 ;;; https://docs.projectile.mx/en/latest/
 (use-package projectile
   :config
-  (projectile-global-mode))
+  (projectile-global-mode)
+  (setq projectile-completion-system 'ivy))
 
 (use-package hydra)
 
@@ -55,6 +73,22 @@
     (async-shell-command "git config --global user.email git-david@bluekeys.eu")
     (async-shell-command "git config --global user.name David"))
 
+(use-package cider
+  :bind ("C-c r" . cider-jack-in))
+
+(use-package general
+  :config
+  (general-def 'normal
+	       "M-." 'xref-find-definitions))
+
+;;;
+;;;
+;;;
+;;; CUSTOM SET VARS BELOW
+;;;
+;;;
+;;;
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -63,7 +97,7 @@
  '(coffee-tab-width 2)
  '(package-selected-packages
    (quote
-    (uniquify no-littering paredit evil-multiedit cider clojure-mode-extra-font-locking clojure-mode tagedit rainbow-delimiters rainbow-delimeters evil-mc evil-collection undo-tree magit hydra projectile swiper ivy company evil use-package-ensure-system-package auto-package-update use-package))))
+    (general counsel uniquify no-littering paredit evil-multiedit cider clojure-mode-extra-font-locking clojure-mode tagedit rainbow-delimiters rainbow-delimeters evil-mc evil-collection undo-tree magit hydra projectile swiper ivy company evil use-package-ensure-system-package auto-package-update use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
