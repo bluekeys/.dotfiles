@@ -12,7 +12,6 @@
 ;; for a more technical explanation.
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 (add-to-list 'load-path "~/.emacs.d/themes")
-;; (load-theme 'tomorrow-night-bright t)
 
 ;; increase font size for better readability
 (set-face-attribute 'default nil :height 140)
@@ -48,3 +47,33 @@
 
 ;; no bell
 (setq ring-bell-function 'ignore)
+
+(set-default-font "Noto Mono 14")
+(set-frame-font "Noto Mono 14")
+
+(set-frame-parameter (selected-frame) 'internal-border-width 20)
+(setq x-underline-at-descent-line t)
+(setq initial-major-mode 'text-mode)
+(setq-default line-spacing 2)
+(set-default 'cursor-type  '(hbar . 2))
+(blink-cursor-mode 0)
+(fringe-mode '(14 . 14))
+
+(setq frame-background-mode 'light)
+(set-background-color "#ffffff")
+(set-foreground-color "#666666")
+
+(setq inhibit-startup-screen t)
+(setq inhibit-startup-echo-area-message t)
+(setq inhibit-startup-message t)   ;; Show/hide startup page
+(setq initial-scratch-message nil) ;; Show/hide *scratch* buffer message
+(menu-bar-mode 0)                  ;; Show/hide menubar
+(tool-bar-mode 0)                  ;; Show/hide toolbar
+(tooltip-mode  0)                  ;; Show/hide tooltip
+(scroll-bar-mode 0)                ;; Show/hide scrollbar
+(save-place-mode 1)
+
+(set-frame-parameter (selected-frame)
+		     'internal-border-width 24)
+
+(show-paren-mode t)
