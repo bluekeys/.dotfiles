@@ -1,0 +1,7 @@
+elpa/
+var/
+git/
+info/
+
+/places
+/.last-package-update-day
