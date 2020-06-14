@@ -9,7 +9,6 @@
      (tagedit-add-paredit-like-keybindings)
      (add-hook 'html-mode-hook (lambda () (tagedit-mode 1)))))
 
-
 ;; coffeescript
 (add-to-list 'auto-mode-alist '("\\.coffee.erb$" . coffee-mode))
 (add-hook 'coffee-mode-hook 'subword-mode)

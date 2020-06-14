@@ -73,17 +73,6 @@
 ;; edit html like paredit
 (use-package tagedit)
 
-;; colourful parenthesis matching
-(use-package rainbow-delimiters
-  :config)
-
-;; Highlights matching parenthesis
-(show-paren-mode 1)
-
-
-;; Highlight current line
-(global-hl-line-mode 1)
-
 ;; When you visit a file, point goes to the last place where it
 ;; was when you previously visited the same file.
 ;; http://www.emacswiki.org/emacs/SavePlace

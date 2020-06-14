@@ -7,15 +7,25 @@
 ;; Select text, M-x shell-command-on-region (which is fittingly bound to M-| by default).
 ;; If you want the selected text to be replaced, press C-u M-| instead of just M-| before entering the command.
 
+;; C-u C-h a  -- apropos for functions and commands
+
 ;; Add a directory to our load path so that when you `load` things
 ;; below, Emacs knows where to look for the corresponding file.
 (add-to-list 'load-path "~/.emacs.d/customizations")
+
+(require 'seq) ;; http://ergoemacs.org/emacs/elisp_filter_list.html
+
+(defcustom my-project-directories nil
+  "Put project directories here. To be supplied to projectile et al."
+  :type '(repeat directory))
 
 (load "package-management.el")
 (load "editing.el")
 (load "clojure.el")
 (load "setup-js.el")
 (load "ui.el")
+(load "projects.el")
+(load "search.el") ;; search, replace, tags
 
 ;; eldoc-mode shows documentation in the minibuffer when writing code
 ;; http://www.emacswiki.org/emacs/ElDoc
@@ -39,8 +49,6 @@
 
 (use-package ivy)
 
-(use-package swiper)
-
 ;; Counsel
 ;; https://oremacs.com/2015/04/09/counsel-completion/
 
@@ -57,12 +65,6 @@
 	 ("C-h u" . counsel-unicode-char)
 	 ("C-h v" . counsel-describe-variable)
 	 ("C-h s" . counsel-info-lookup-symbol)))
-
-;;; https://docs.projectile.mx/en/latest/
-(use-package projectile
-  :config
-  (projectile-global-mode)
-  (setq projectile-completion-system 'ivy))
 
 (use-package hydra)
 
@@ -94,13 +96,16 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(*project-directories* "~/Projects/ ~/src/")
  '(coffee-tab-width 2)
+ '(global-hl-line-mode t)
+ '(my-project-directories (quote ("~/Projects/" "~/doesntexist/")))
  '(package-selected-packages
    (quote
-    (general counsel uniquify no-littering paredit evil-multiedit cider clojure-mode-extra-font-locking clojure-mode tagedit rainbow-delimiters rainbow-delimeters evil-mc evil-collection undo-tree magit hydra projectile swiper ivy company evil use-package-ensure-system-package auto-package-update use-package))))
+    (counsel-projectile wgrep ag general counsel uniquify no-littering paredit evil-multiedit cider clojure-mode-extra-font-locking clojure-mode tagedit rainbow-delimiters rainbow-delimeters evil-mc evil-collection undo-tree magit hydra projectile swiper ivy company evil use-package-ensure-system-package auto-package-update use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(hl-line ((t (:inherit highlight :background "gold")))))
