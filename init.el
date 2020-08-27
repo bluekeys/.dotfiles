@@ -1,3 +1,5 @@
+;;; (debug-on-entry do-after-load-evaluation)
+
 ;;; Places to learn from
 ;; https://github.com/emacs-tw/awesome-emacs
 ;; https://github.com/DamienCassou/emacs.d/blob/master/init.el
