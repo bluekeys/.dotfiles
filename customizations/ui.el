@@ -28,6 +28,7 @@
 ;; no bell
 (setq ring-bell-function 'ignore)
 
+;;; TODO: Only set font if it exists on the system
 (set-default-font "Noto Mono 14")
 (set-frame-font "Noto Mono 14")
 
