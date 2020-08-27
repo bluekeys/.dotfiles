@@ -28,9 +28,12 @@
 ;; no bell
 (setq ring-bell-function 'ignore)
 
-;;; TODO: Only set font if it exists on the system
-;;; until then sudo apt install fonts-noto
-(set-default-font "Noto Mono 14")
+;;; TODO: Only pick noto font if it exists on the system
+;;; until then 
+;;; fc-list can be used to find which fonts are available
+;;; sudo apt install fonts-noto
+;;; guix install font-google-noto; fc-cache -rv
+(set-default-font "Noto Mono 14") ; Noto aims for complete UTF8 representation
 (set-frame-font "Noto Mono 14")
 
 (set-frame-parameter (selected-frame) 'internal-border-width 10)

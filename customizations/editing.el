@@ -1,9 +1,11 @@
 ;; Customizations relating to editing a buffer.
-
+(save-place-mode 1)
 (use-package undo-tree) ; https://elpa.gnu.org/packages/undo-tree.html
 
+;;;
 ;;; Evil
-;; https://github.com/noctuid/evil-guide
+;;;
+;;; https://github.com/noctuid/evil-guide
 (use-package evil
   :init
   (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
