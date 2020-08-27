@@ -1,79 +1,86 @@
-;; Show line numbers
-(global-linum-mode)
+;;;
+;;; STARTUP
+;;;
+(setq inhibit-startup-screen t)
+(setq inhibit-startup-echo-area-message t)
+(setq inhibit-startup-message t) ; Go straight to scratch buffer on startup
+(setq initial-scratch-message nil)
 
-;; Don't show native OS scroll bars for buffers because they're redundant
-(when (fboundp 'scroll-bar-mode)
-  (scroll-bar-mode -1))
+(fset 'yes-or-no-p 'y-or-n-p) ; Changes all yes/no questions to y/n type
 
-;; Color Themes
-;; Read http://batsov.com/articles/2012/02/19/color-theming-in-emacs-reloaded/
-;; for a great explanation of emacs color themes.
-;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Custom-Themes.html
-;; for a more technical explanation.
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
-(add-to-list 'load-path "~/.emacs.d/themes")
+;;;
+;;; MINIBUFFER
+;;;
+;;; eldoc-mode shows documentation in the minibuffer when writing code
+;;; http://www.emacswiki.org/emacs/ElDoc
+(add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
+(add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
+(add-hook 'ielm-mode-hook 'turn-on-eldoc-mode)
 
-;; increase font size for better readability
-(set-face-attribute 'default nil :height 140)
+;;;
+;;; MENUS AND SCROLLBARS
+;;;
+;(when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1)) ; Saves screen real-estate
+(menu-bar-mode 0)                  ; Show/hide menubar
+(tool-bar-mode 0)                  ; Show/hide toolbar
+(tooltip-mode  0)                  ; Prefer help in echo area to pop-up window
+(scroll-bar-mode 0)                ; Show/hide scrollbar
+(global-set-key (kbd "s-t") '(lambda () (interactive))) ; don't pop up font menu
 
-;; No cursor blinking, it's distracting
-(blink-cursor-mode 0)
+;;;
+;;; LINE NUMBERS
+;;;
+(global-linum-mode) ; Helps with pair programming and tracing
 
-;; full path in title bar
-(setq-default frame-title-format "%b (%f)")
+;;;
+;;; FRINGE
+;;;
+(fringe-mode '(25 . 25)) ;; fringe
+(set-face-attribute 'fringe nil :background nil)
 
-;; don't pop up font menu
-(global-set-key (kbd "s-t") '(lambda () (interactive)))
+;;;
+;;; BORDER
+;;;
+(set-frame-parameter (selected-frame) 'internal-border-width 10)
 
-;; no bell
-(setq ring-bell-function 'ignore)
-
-;;; TODO: Only pick noto font if it exists on the system
-;;; until then 
+;;;
+;;; FONT
+;;;
 ;;; fc-list can be used to find which fonts are available
 ;;; sudo apt install fonts-noto
 ;;; guix install font-google-noto; fc-cache -rv
+;;; TODO: Should only pick a font if it exists on the system
 (set-default-font "Noto Mono 14") ; Noto aims for complete UTF8 representation
-(set-frame-font "Noto Mono 14")
+(set-frame-font "Noto Mono 14")   ; TODO: Use a variable
+(set-face-attribute 'default nil :height 140) ; increase font size for better readability
 
-(set-frame-parameter (selected-frame) 'internal-border-width 10)
-(setq x-underline-at-descent-line t)
-(setq-default line-spacing 2)
-(set-default 'cursor-type  '(hbar . 5))
-;; (modify-frame-parameters (selected-frame) (list (cons 'cursor-type '(hbar . 9))))
+;;;
+;;; CURSOR
+;;;
+(blink-cursor-mode 0) ; Limit the distraction
+(set-default 'cursor-type  '(hbar . 5)) ; Increase visibility
 
-;; fringe
-(fringe-mode '(14 . 0))
-(set-face-attribute 'fringe nil :background nil)
+;;;
+;;; BELL
+;;;
+(setq ring-bell-function 'ignore) ; no bell
 
-(setq frame-background-mode 'light)
-(set-background-color "#ffffff")
-(set-foreground-color "#666666")
+;;;
+;;; TITLE
+;;;
+(setq-default frame-title-format "%b (%f)") ; full path in title bar
 
-(setq inhibit-startup-screen t)
-(setq inhibit-startup-echo-area-message t)
-(setq inhibit-startup-message t)   ;; Show/hide startup page
-(setq initial-scratch-message nil) ;; Show/hide *scratch* buffer message
-(menu-bar-mode 0)                  ;; Show/hide menubar
-(tool-bar-mode 0)                  ;; Show/hide toolbar
-(tooltip-mode  0)                  ;; Show/hide tooltip
-(scroll-bar-mode 0)                ;; Show/hide scrollbar
-;; (setq initial-major-mode 'text-mode)
-(save-place-mode 1)
+;;;
+;;; LINE AND UNDERLINE
+;;;
+(setq x-underline-at-descent-line t) ; give it space to work its magic
+(setq-default line-spacing 2) ; just a smidge
+(global-hl-line-mode 1)                  ; Highlight current line
 
-(set-frame-parameter (selected-frame)
-		     'internal-border-width 24)
-
-(show-paren-mode t)
-
-;; colourful parenthesis matching
-(use-package rainbow-delimiters
-  :config)
-
-;; Highlights matching parenthesis
-(show-paren-mode 1)
-
-;; Highlight current line
-(global-hl-line-mode 1)
-; (setq hl-line-face)
+;;;
+;;; PARENTHESIS
+;;;
+(use-package rainbow-delimiters :config) ; colourful parenthesis matching
+; FIXME colourful parenthesis don't work as I expect
+(show-paren-mode 1) ; Highlights matching parenthesis
 

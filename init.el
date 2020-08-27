@@ -26,26 +26,14 @@
 (load "clojure.el")
 (load "setup-js.el")
 (load "ui.el")
+(load "theme.el")
 (load "projects.el")
 (load "search.el") ;; search, replace, tags
 
-;; eldoc-mode shows documentation in the minibuffer when writing code
-;; http://www.emacswiki.org/emacs/ElDoc
-(add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
-(add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
-(add-hook 'ielm-mode-hook 'turn-on-eldoc-mode)
-
-;; Changes all yes/no questions to y/n type
-(fset 'yes-or-no-p 'y-or-n-p)
-
-;; No need for ~ files when editing
-(setq create-lockfiles nil)
-
-;; Go straight to scratch buffer on startup
-(setq inhibit-startup-message t)
-
-(use-package no-littering
-  :demand t)
+;;; TRAMP
+(setq tramp-default-method "ssh")
+(setq create-lockfiles nil) ; No need for ~ files when editing
+(use-package no-littering :demand t)
 
 (use-package company)
 
@@ -73,12 +61,26 @@
 (use-package magit
   :ensure-system-package git
   :config
-    (async-shell-command "git config --global transfer.fsckObjects true") ;; https://lists.gnu.org/archive/html/emacs-devel/2016-01/msg01802.html
-    (async-shell-command "git config --global user.email git-david@bluekeys.eu")
-    (async-shell-command "git config --global user.name David"))
+	; https://lists.gnu.org/archive/html/emacs-devel/2016-01/msg01802.html
+    (start-process
+     "git-fsck"
+     nil
+     "git"
+     "git" "config" "--global" "transfer.fsckObjects" "true") 
 
-(use-package cider
-  :bind ("C-c r" . cider-jack-in))
+    (start-process
+     "git-config-email"
+     nil
+     "git"
+     "git" "config" "--global" "user.email" "git-david@bluekes.eu") 
+
+    (start-process
+     "git-fsck"
+     nil
+     "git"
+     "git" "config" "--global" "user.name" "David"))
+
+(use-package cider :bind ("C-c r" . cider-jack-in))
 
 (use-package general
   :config
@@ -86,11 +88,7 @@
 	       "M-." 'xref-find-definitions))
 
 ;;;
-;;;
-;;;
-;;; CUSTOM SET VARS BELOW
-;;;
-;;;
+;;; CUSTOM SET VARS
 ;;;
 
 (custom-set-variables
@@ -111,6 +109,3 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(hl-line ((t (:inherit highlight :background "gold")))))
-
-;;; TRAMP
-(setq tramp-default-method "ssh")
