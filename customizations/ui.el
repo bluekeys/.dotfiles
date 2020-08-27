@@ -29,6 +29,7 @@
 (setq ring-bell-function 'ignore)
 
 ;;; TODO: Only set font if it exists on the system
+;;; until then sudo apt install fonts-noto
 (set-default-font "Noto Mono 14")
 (set-frame-font "Noto Mono 14")
 
